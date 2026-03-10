@@ -679,15 +679,19 @@ footer {
 
     #hero {
         height: auto;
-        min-height: 100svh;
-        padding-top: 72px;
+        min-height: 70vh;
+        /* Altura reducida como solicitado */
+        padding-top: 80px;
         background-attachment: scroll;
-        align-items: flex-start;
+        align-items: center;
+        /* Centrado vertical */
     }
 
     .hero-content {
-        padding: 2.5rem 1.5rem;
-        text-align: left;
+        padding: 2rem 1.5rem;
+        text-align: center;
+        /* Centrado horizontal */
+        width: 100%;
     }
 
     #hero h1 {
@@ -698,12 +702,17 @@ footer {
     #hero p {
         font-size: 1rem;
         margin-bottom: 2rem;
-        text-align: left;
+        text-align: center;
+        /* Centrado horizontal */
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-btns {
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 1rem;
+        align-items: center;
+        /* Centrar botones */
     }
 
     .btn-primary,
