@@ -326,10 +326,10 @@ a {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: rgba(255, 157, 0, 0.1);
+    background: rgba(255, 157, 0, 0.08);
     clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-    border: 1px solid rgba(255, 157, 0, 0.25);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(0 0 10px rgba(255, 157, 0, 0.25));
+    transition: filter 0.4s ease, transform 0.4s ease;
 }
 
 .stall-img {
