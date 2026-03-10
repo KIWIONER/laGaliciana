@@ -1,0 +1,312 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "galiciana-whatsapp",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [200, 300],
+      "id": "db475ca6-6618-4c19-bf8a-65f288511bd2",
+      "name": "WebhookWhatsApp",
+      "webhookId": "180bb982-3f94-489a-a1b2-a9e1d0ca3f09"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "galiciana-chat",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "c47047a9-0cd8-44e4-b116-1ae6ccd7f8b4",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [200, 700],
+      "webhookId": "galiciana-chat"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body;\nconst messages = body?.entry?.[0]?.changes?.[0]?.value?.messages;\nif (!messages || messages.length === 0) {\n  return [];\n}\nconst msg = messages[0];\nif (msg.type !== 'text') {\n  return [];\n}\nreturn [{\n  sessionId: msg.from,\n  message: msg.text.body,\n  from: msg.from\n}];"
+      },
+      "id": "wa-filter-001",
+      "name": "Filtrar Mensaje WA",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId }}",
+        "tableName": "chat_messages",
+        "contextWindowLength": 20
+      },
+      "id": "mem-wa-001",
+      "name": "Memoria WA",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [600, 500],
+      "credentials": {
+        "postgres": {
+          "id": "RbJvkmz8YCscCTEB",
+          "name": "Postgres cuenta principal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [800, 500],
+      "id": "gemini-wa-001",
+      "name": "Gemini WA",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "lwiywrx976Ev9exU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "options": {
+          "systemMessage": "Eres la gerente de reservas de LA GALICIANA. Tu objetivo es atender dudas, captar reservas y confirmar automáticamente.\nREGLAS CRÍTICAS:\n1) IDIOMA: Responde SIEMPRE en CASTELLANO/ESPAÑOL. Solo puedes usar gallego si el cliente te habla exclusivamente en gallego.\n2) NO REPETIR: Revisa el historial. Si el cliente ya te ha dicho su nombre, su teléfono, el número de personas o la fecha, NO se lo vuelvas a preguntar. Dalo por bueno y pasa al siguiente dato que falte.\n3) NOMBRE: Si el usuario dice su nombre, acéptalo. No insistas en el nombre completo si ya tienes uno identificativo.\n4) FLUJO NATURAL: Pide los datos uno a uno: (1. Día/Hora, 2. Personas, 3. Nombre, 4. Teléfono).\n5) RESERVAS < 6: Si son menos de 6 personas, diles con cariño que no reservamos, que vengan directamente.\n6) NOTAS: Una vez tengas los datos básicos, PREGUNTA siempre si tienen alguna aclaración o petición especial (alergias, carritos de bebé, ocasiones especiales, etc.).\n7) CONFIRMACIÓN ÚNICA: Una vez hayas llamado a GuardarReservaDB y NotificarWhatsAppCliente y AvisarRestaurante, la reserva está CONFIRMADA. No vuelvas a guardar ni notificar aunque el cliente escriba de nuevo.\nHERRAMIENTAS:\n- En cuanto tengas Día/Hora, Personas (>=6), Nombre, Teléfono y hayas preguntado por las NOTAS (aunque no tengan), llama a 'GuardarReservaDB'.\n- Justo después de guardar, llama a 'NotificarWhatsAppCliente'.\n- Después llama a 'AvisarRestaurante'.\n- Finalmente, despídete confirmando la mesa con alegría."
+        }
+      },
+      "id": "agent-wa-001",
+      "name": "Agente WA",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.facebook.com/v22.0/1062930240231471/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "messaging_product",
+              "value": "whatsapp"
+            },
+            {
+              "name": "to",
+              "value": "={{ $('Filtrar Mensaje WA').first().json.from }}"
+            },
+            {
+              "name": "type",
+              "value": "text"
+            },
+            {
+              "name": "text.body",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1250, 300],
+      "id": "dea35d71-001e-4c20-b4b6-003e752d4f24",
+      "name": "ResponderClienteWA",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "ydN05KbhwF8MlWtS",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.body.sessionId || 'web-user' }}",
+        "tableName": "chat_messages",
+        "contextWindowLength": 20
+      },
+      "id": "mem-web-001",
+      "name": "Memoria Web",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [600, 900],
+      "credentials": {
+        "postgres": {
+          "id": "RbJvkmz8YCscCTEB",
+          "name": "Postgres cuenta principal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [800, 900],
+      "id": "gemini-web-001",
+      "name": "Gemini Web",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "lwiywrx976Ev9exU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.body.message }}",
+        "options": {
+          "systemMessage": "Eres la gerente de reservas de LA GALICIANA. Tu objetivo es atender dudas, captar reservas y confirmar automáticamente.\nREGLAS CRÍTICAS:\n1) IDIOMA: Responde SIEMPRE en CASTELLANO/ESPAÑOL. Solo puedes usar gallego si el cliente te habla exclusivamente en gallego.\n2) NO REPETIR: Revisa el historial. Si el cliente ya te ha dicho su nombre, su teléfono, el número de personas o la fecha, NO se lo vuelvas a preguntar. Dalo por bueno y pasa al siguiente dato que falte.\n3) NOMBRE: Si el usuario dice su nombre, acéptalo. No insistas en el nombre completo si ya tienes uno identificativo.\n4) FLUJO NATURAL: Pide los datos uno a uno: (1. Día/Hora, 2. Personas, 3. Nombre, 4. Teléfono).\n5) RESERVAS < 6: Si son menos de 6 personas, diles con cariño que no reservamos, que vengan directamente.\n6) NOTAS: Una vez tengas los datos básicos, PREGUNTA siempre si tienen alguna aclaración o petición especial (alergias, carritos de bebé, ocasiones especiales, etc.).\n7) CONFIRMACIÓN ÚNICA: Una vez hayas llamado a GuardarReservaDB y NotificarWhatsAppCliente y AvisarRestaurante, la reserva está CONFIRMADA. No vuelvas a guardar ni notificar aunque el cliente escriba de nuevo.\nHERRAMIENTAS:\n- En cuanto tengas Día/Hora, Personas (>=6), Nombre, Teléfono y hayas preguntado por las NOTAS (aunque no tengan), llama a 'GuardarReservaDB'.\n- Justo después de guardar, llama a 'NotificarWhatsAppCliente'.\n- Después llama a 'AvisarRestaurante'.\n- Finalmente, despídete confirmando la mesa con alegría."
+        }
+      },
+      "id": "agent-web-001",
+      "name": "Agente Web",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [1000, 700]
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = $json.output || \"¡Hola!\";\nlet sessionId = \"web-user\";\ntry {\n  sessionId = $(\"Webhook\").first().json.body.sessionId || \"web-user\";\n} catch (e) {}\nreturn { reply: output, sessionId: sessionId };"
+      },
+      "id": "487c78d0-a3a9-4120-8a79-a6150ff4d89e",
+      "name": "Formatear Respuesta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1250, 700]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Usa esta herramienta EXCLUSIVAMENTE cuando tengas TODOS los datos confirmados del cliente: Nombre, Día/Hora de reserva, Número de Personas y Teléfono. Debes ejecutarla siempre ANTES de enviar los whatsapps.",
+        "operation": "executeQuery",
+        "query": "INSERT INTO reservas_galiciana (nombre, fecha, hora, personas, telefono, session_id, notas, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, NOW());",
+        "options": {
+          "queryReplacement": "={{$fromAI('nombre')}}, ={{$fromAI('fecha_iso8601')}}, ={{$fromAI('hora_hhmm')}}, ={{$fromAI('personas')}}, ={{$fromAI('telefono')}}, ={{$fromAI('session_id')}}, ={{$fromAI('notas') || ''}}"
+        }
+      },
+      "id": "f606d031-c668-49da-8477-9c0943ae2f61",
+      "name": "GuardarReservaDB",
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [1000, 500],
+      "credentials": {
+        "postgres": {
+          "id": "RbJvkmz8YCscCTEB",
+          "name": "Postgres cuenta principal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Usa esta herramienta ÚNICAMENTE DESPUÉS de haber guardado la reserva en la base de datos con GuardarReservaDB. Necesitas pasar el telefono del cliente y el mensaje amistoso de confirmación.",
+        "method": "POST",
+        "url": "https://graph.facebook.com/v22.0/1062930240231471/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{ ($fromAI('telefono') || '').toString().startsWith('34') ? $fromAI('telefono') : '34' + $fromAI('telefono') }}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{ $fromAI('mensaje') }}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "2e4b551f-069b-43e5-959b-8116b7552331",
+      "name": "NotificarWhatsAppCliente",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [1200, 500],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "ydN05KbhwF8MlWtS",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Usa esta herramienta DESPUÉS de NotificarWhatsAppCliente para notificar al restaurante de la nueva reserva.",
+        "method": "POST",
+        "url": "https://graph.facebook.com/v22.0/1062930240231471/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"34657738334\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"🎯 NUEVA RESERVA:\\n\\n{{ $fromAI('resumen_reserva_para_dueno') }}\\n\\nNOTAS: {{ $fromAI('notas') || 'Ninguna' }}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "93e36c81-518d-41a9-a747-a8db1c3f7bc9",
+      "name": "AvisarRestaurante",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [1400, 500],
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "ydN05KbhwF8MlWtS",
+          "name": "Bearer Auth account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "WebhookWhatsApp": {
+      "main": [[{"node": "Filtrar Mensaje WA", "type": "main", "index": 0}]]
+    },
+    "Filtrar Mensaje WA": {
+      "main": [[{"node": "Agente WA", "type": "main", "index": 0}]]
+    },
+    "Agente WA": {
+      "main": [[{"node": "ResponderClienteWA", "type": "main", "index": 0}]]
+    },
+    "Memoria WA": {
+      "ai_memory": [[{"node": "Agente WA", "type": "ai_memory", "index": 0}]]
+    },
+    "Gemini WA": {
+      "ai_languageModel": [[{"node": "Agente WA", "type": "ai_languageModel", "index": 0}]]
+    },
+    "Webhook": {
+      "main": [[{"node": "Agente Web", "type": "main", "index": 0}]]
+    },
+    "Agente Web": {
+      "main": [[{"node": "Formatear Respuesta", "type": "main", "index": 0}]]
+    },
+    "Memoria Web": {
+      "ai_memory": [[{"node": "Agente Web", "type": "ai_memory", "index": 0}]]
+    },
+    "Gemini Web": {
+      "ai_languageModel": [[{"node": "Agente Web", "type": "ai_languageModel", "index": 0}]]
+    },
+    "GuardarReservaDB": {
+      "ai_tool": [
+        [{"node": "Agente WA", "type": "ai_tool", "index": 0}],
+        [{"node": "Agente Web", "type": "ai_tool", "index": 0}]
+      ]
+    },
+    "NotificarWhatsAppCliente": {
+      "ai_tool": [
+        [{"node": "Agente WA", "type": "ai_tool", "index": 0}],
+        [{"node": "Agente Web", "type": "ai_tool", "index": 0}]
+      ]
+    },
+    "AvisarRestaurante": {
+      "ai_tool": [
+        [{"node": "Agente WA", "type": "ai_tool", "index": 0}],
+        [{"node": "Agente Web", "type": "ai_tool", "index": 0}]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "08a824099da745d09c573a95c3a80228679fad2d1d0e81e8ed501b5a05186dba"
+  }
+}

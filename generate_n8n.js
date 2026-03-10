@@ -1,0 +1,142 @@
+﻿const fs = require('fs');
+const galiciana = JSON.parse(fs.readFileSync('C:\\Users\\balsa\\Desktop\\lagaliciana\\n8n_workflow_galiciana.json', 'utf8'));
+const newWorkflow = {
+  name: 'La Galiciana - Cerebro Agente IA',
+  nodes: [],
+  connections: {},
+  settings: { executionOrder: 'v1' },
+  meta: galiciana.meta
+};
+
+// 1. Webhook
+newWorkflow.nodes.push({
+  parameters: { httpMethod: 'POST', path: 'galiciana-chat', responseMode: 'lastNode', options: {} },
+  id: 'webhook-trigger',
+  name: 'Webhook',
+  type: 'n8n-nodes-base.webhook',
+  typeVersion: 2,
+  position: [0, 300],
+  webhookId: 'galiciana-chat'
+});
+
+// 2. Memory
+newWorkflow.nodes.push({
+  parameters: { sessionIdType: 'customKey', sessionKey: '={{ $json.body.sessionId }}', tableName: 'chat_messages', contextWindowLength: 20 },
+  id: 'memory-node',
+  name: 'Postgres Chat Memory',
+  type: '@n8n/n8n-nodes-langchain.memoryPostgresChat',
+  typeVersion: 1.3,
+  position: [-100, 500],
+  credentials: { postgres: { id: 'RbJvkmz8YCscCTEB', name: 'Postgres cuenta principal' } }
+});
+
+// 3. Model
+newWorkflow.nodes.push({
+  parameters: { model: 'gpt-4o-mini', options: { temperature: 0.7 } },
+  id: 'ai-model',
+  name: 'OpenAI Chat Model',
+  type: '@n8n/n8n-nodes-langchain.lmChatOpenAi',
+  typeVersion: 1,
+  position: [-100, 700],
+  credentials: { openAiApi: { id: 'openai-credential', name: 'OpenAI' } }
+});
+
+// 4. Agent
+newWorkflow.nodes.push({
+  parameters: {
+    promptType: 'define',
+    text: '={{ $json.body.message }}',
+    options: {
+      systemMessage: 'Eres la gerente de reservas de LA GALICIANA, el primer mercado gastronómico de Santiago de Compostela (Gómez Ulla, 1). Tu objetivo es atender dudas, captar reservas y confirmar automáticamente.\n\nDatos de interés: Lunes a domingo 12:00 a 00:00 (J,V,S hasta 02:00). Grupos de < 6 pers no reservan (se atiende por orden de llegada).\nLocales: Casa María, Churras Churras, Veggie Carmen, Le Petit Tamboril, Lacón Street, Ollo Pataca, TotoTrufa\\'62, Iraxai.\n\nREGLAS DE ORO:\n1) Actúa como si fueses la dueña humana, súper amable y gallega. NADA de respuestas robóticas ni listas aburridas.\n2) Pide los datos de la reserva UNO A UNO integrados en la conversación (Día/Hora, Personas, Nombre, Teléfono/WhatsApp). NUNCA pidas todos de golpe.\n3) Si piden para menos de 6 personas, diles con cariño que no hace falta reservar, que se acerquen directamente y les buscáis hueco.\n4) CRITICAL INSTRUCTION: En cuanto el cliente te confirme todos los datos imprescindibles para la reserva (Día/Hora, Personas >= 6, Nombre y Teléfono), DEBES llamar a la herramienta GuardarReservaDB INMEDIATAMENTE para asegurar la mesa.\n5) SÓLO DESPUÉS de guardar la reserva con éxito, DEBES llamar a la herramienta NotificarWhatsAppCliente para enviarle el SMS final de confirmación al cliente, y luego a la herramienta AvisarRestaurante para avisar al dueño.\n6) Tras usar las herramientas, despídete del cliente confirmando su mesa con alegría.'
+    }
+  },
+  id: 'agent-node',
+  name: 'Dueña IA (La Galiciana)',
+  type: '@n8n/n8n-nodes-langchain.agent',
+  typeVersion: 3.1,
+  position: [250, 300]
+});
+
+// 5. Tool DB
+newWorkflow.nodes.push({
+  parameters: {
+    descriptionType: 'manual',
+    toolDescription: 'Usa esta herramienta EXCLUSIVAMENTE cuando tengas TODOS los datos confirmados del cliente: Nombre, Día/Hora de reserva, Número de Personas y Teléfono. Debes ejecutarla siempre ANTES de enviar los whatsapps.',
+    operation: 'executeQuery',
+    query: 'INSERT INTO reservas_galiciana (nombre, fecha, hora, personas, telefono, session_id, created_at) VALUES (, , , , , , NOW());',
+    options: {
+      queryReplacement: '{{$fromAI(\"nombre\")}}, {{$fromAI(\"fecha_iso8601\")}}, {{$fromAI(\"hora_hhmm\")}}, {{$fromAI(\"personas\")}}, {{$fromAI(\"telefono\")}}, {{$(\"Webhook\").item.json.body.sessionId}}'
+    }
+  },
+  id: 'tool-db',
+  name: 'GuardarReservaDB',
+  type: 'n8n-nodes-base.postgresTool',
+  typeVersion: 2.6,
+  position: [300, 600],
+  credentials: { postgres: { id: 'RbJvkmz8YCscCTEB', name: 'Postgres cuenta principal' } }
+});
+
+// 6. Tool WA Cliente
+newWorkflow.nodes.push({
+  parameters: {
+    toolDescription: 'Usa esta herramienta ÚNICAMENTE DESPUÉS de haber guardado la reserva en la base de datos con GuardarReservaDB. Necesitas pasar por parámetro el telefono del cliente y el mensaje amistoso de confirmación de reserva que recibirá en su móvil.',
+    method: 'POST',
+    url: 'https://graph.facebook.com/v22.0/1062930240231471/messages',
+    authentication: 'predefinedCredentialType',
+    nodeCredentialType: 'httpBearerAuth',
+    sendBody: true,
+    specifyBody: 'json',
+    jsonBody: '{\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"{{$fromAI(\"telefono\")}}\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"{{$fromAI(\"mensaje\")}}\"\n  }\n}'
+  },
+  id: 'tool-wa-client',
+  name: 'NotificarWhatsAppCliente',
+  type: 'n8n-nodes-base.httpRequestTool',
+  typeVersion: 4.3,
+  position: [500, 600],
+  credentials: { httpBearerAuth: { id: 'ydN05KbhwF8MlWtS', name: 'Bearer Auth account' } }
+});
+
+// 7. Tool WA Dueño
+newWorkflow.nodes.push({
+  parameters: {
+    toolDescription: 'Usa esta herramienta DESPUÉS de NotificarWhatsAppCliente para registrar la reserva en el WhatsApp del restaurante. Pasa un mensaje resumiendo la reserva (nombre, personas, dia, hora).',
+    method: 'POST',
+    url: 'https://graph.facebook.com/v22.0/1062930240231471/messages',
+    authentication: 'predefinedCredentialType',
+    nodeCredentialType: 'httpBearerAuth',
+    sendBody: true,
+    specifyBody: 'json',
+    jsonBody: '{\n  \"messaging_product\": \"whatsapp\",\n  \"to\": \"34657738334\",\n  \"type\": \"text\",\n  \"text\": {\n    \"body\": \"NUEVA RESERVA DESDE LA WEB:\\n\\n{{$fromAI(\"resumen_reserva_para_dueño\")}}\"\n  }\n}'
+  },
+  id: 'tool-wa-owner',
+  name: 'AvisarRestaurante',
+  type: 'n8n-nodes-base.httpRequestTool',
+  typeVersion: 4.3,
+  position: [680, 600],
+  credentials: { httpBearerAuth: { id: 'ydN05KbhwF8MlWtS', name: 'Bearer Auth account' } }
+});
+
+// 8. Output
+newWorkflow.nodes.push({
+  parameters: {
+    jsCode: 'return [{ json: { reply: .all()[0].json.output, sessionId: .item?.json?.body?.sessionId || \\'\\' } }];'
+  },
+  id: 'code-return',
+  name: 'Formatear Respuesta',
+  type: 'n8n-nodes-base.code',
+  typeVersion: 2,
+  position: [650, 300]
+});
+
+// Connections
+newWorkflow.connections = {
+  'Webhook': { main: [[ { node: 'Dueña IA (La Galiciana)', type: 'main', index: 0 } ]] },
+  'Dueña IA (La Galiciana)': { main: [[ { node: 'Formatear Respuesta', type: 'main', index: 0 } ]] },
+  'Postgres Chat Memory': { ai_memory: [[ { node: 'Dueña IA (La Galiciana)', type: 'ai_memory', index: 0 } ]] },
+  'OpenAI Chat Model': { ai_languageModel: [[ { node: 'Dueña IA (La Galiciana)', type: 'ai_languageModel', index: 0 } ]] },
+  'GuardarReservaDB': { ai_tool: [[ { node: 'Dueña IA (La Galiciana)', type: 'ai_tool', index: 0 } ]] },
+  'NotificarWhatsAppCliente': { ai_tool: [[ { node: 'Dueña IA (La Galiciana)', type: 'ai_tool', index: 0 } ]] },
+  'AvisarRestaurante': { ai_tool: [[ { node: 'Dueña IA (La Galiciana)', type: 'ai_tool', index: 0 } ]] }
+};
+
+fs.writeFileSync('C:\\\\Users\\\\balsa\\\\Desktop\\\\lagaliciana\\\\n8n_workflow_galiciana_agente_v2.json', JSON.stringify(newWorkflow, null, 2));

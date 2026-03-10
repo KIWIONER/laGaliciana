@@ -1,0 +1,1851 @@
+/* La Galiciana - Design System & Core Styles */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap');
+
+:root {
+    /* Color Palette - "Golden Hour Industrial" */
+    --bg-dark: #0f0f0f;
+    --bg-card: #1a1a1a;
+    --accent-amber: #ff9d00;
+    --accent-red: #d32f2f;
+    /* Tractor Red */
+    --text-primary: #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --wood-warm: #a67c52;
+    --metal-dark: #2d2d2d;
+
+    /* Spacing */
+    --section-padding: 6rem 5%;
+    --border-radius: 8px;
+
+    /* Shadows */
+    --glow-amber: 0 0 20px rgba(255, 157, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+}
+
+/* Base Components */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background-color: var(--accent-amber);
+    color: var(--bg-dark);
+    font-weight: 700;
+    border-radius: var(--border-radius);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--glow-amber);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background-color: #ffb740;
+}
+
+.section-title {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-amber);
+}
+
+/* Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Navigation */
+#main-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1.5rem 5%;
+    transition: all 0.4s ease;
+}
+
+#main-nav.scrolled {
+    background-color: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 5%;
+    border-bottom: 1px solid var(--metal-dark);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+}
+
+.nav-links a {
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.nav-links a:hover {
+    color: var(--accent-amber);
+}
+
+/* Hero Section */
+#hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: url('../img/hero-bg.jpg') center/cover no-repeat;
+    position: relative;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(15, 15, 15, 0.7), var(--bg-dark));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+#hero h1 {
+    font-size: clamp(3rem, 10vw, 6rem);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+}
+
+#hero p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-btns .btn-primary,
+.hero-btns .btn-secondary {
+    min-width: 220px;
+    /* Ancho igualado para simetría */
+    justify-content: center;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border: 1px solid var(--text-secondary);
+    color: var(--text-primary);
+    border-radius: var(--border-radius);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-amber);
+    color: var(--accent-amber);
+}
+
+/* History Section */
+#historia {
+    padding: var(--section-padding);
+}
+
+.section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.section-text p {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.section-image {
+    position: relative;
+    height: 500px;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.image-accent-amber {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background-color: var(--accent-red);
+    opacity: 0.2;
+    z-index: -1;
+}
+
+#gastronomia {
+    padding: var(--section-padding);
+    background-color: #0a0a0a;
+}
+
+.section-subtitle {
+    display: block;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: -1.2rem;
+    margin-bottom: 0;
+    letter-spacing: 0.04em;
+}
+
+.stalls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.stall-card {
+    background: var(--bg-card);
+    padding: 3.5rem 2.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stall-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--accent-amber);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.stall-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 157, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.stall-card:hover::before {
+    transform: scaleX(1);
+}
+
+.stall-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.stall-icon {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255, 157, 0, 0.1);
+    border: 3px solid rgba(255, 157, 0, 0.25);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.stall-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.stall-card:hover .stall-img {
+    transform: scale(1.15);
+}
+
+.stall-card p {
+    color: var(--text-secondary);
+}
+
+/* Special Experience Section */
+.full-width-accent {
+    padding: var(--section-padding);
+    background: linear-gradient(rgba(15, 15, 15, 0.85), rgba(15, 15, 15, 0.85)), url('../img/hero-bg.jpg') center/cover no-repeat fixed;
+    text-align: center;
+}
+
+.full-width-accent h2 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: 1.5rem;
+}
+
+.full-width-accent p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.tractor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 0.6rem 1.6rem;
+    border: 1px solid rgba(255, 157, 0, 0.4);
+    color: var(--accent-amber);
+    border-radius: 50px;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    background: rgba(255, 157, 0, 0.08);
+    backdrop-filter: blur(4px);
+}
+
+/* ── Reviews Section ────────────────────── */
+#resenas {
+    padding: var(--section-padding);
+    background-color: #080808;
+}
+
+.section-header {
+    margin-bottom: 3rem;
+}
+
+.tripadvisor-badge {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.review-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--border-radius);
+    padding: 1.75rem;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.review-card:hover {
+    border-color: rgba(255, 157, 0, 0.3);
+    transform: translateY(-4px);
+}
+
+.review-stars {
+    color: var(--accent-amber);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+}
+
+.review-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+}
+
+.review-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.review-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent-amber);
+    color: var(--bg-dark);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.review-author strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+}
+
+.review-author span {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* ── Info / Ubicación / Horario ─────────── */
+#info {
+    padding: var(--section-padding);
+    background-color: var(--bg-dark);
+    border-top: 1px solid var(--metal-dark);
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.5rem;
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.info-icon {
+    width: 36px;
+    height: 36px;
+    color: var(--accent-amber);
+    margin-bottom: 0.25rem;
+}
+
+.info-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--accent-amber);
+}
+
+.info-block h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+}
+
+.info-block p {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.7;
+}
+
+.info-block p strong {
+    color: var(--accent-amber);
+}
+
+.info-link {
+    display: inline-block;
+    margin-top: 0.4rem;
+    color: var(--accent-amber);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: opacity 0.2s;
+}
+
+.info-link:hover {
+    opacity: 0.75;
+}
+
+/* ── Footer ─────────────────────────────── */
+footer {
+    padding: 2.5rem 5%;
+    background-color: #050505;
+    border-top: 1px solid var(--metal-dark);
+}
+
+.footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    letter-spacing: 0.08em;
+}
+
+.footer-tagline {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.footer-copy {
+    font-size: 0.8rem;
+    color: rgba(160, 160, 160, 0.5);
+    margin-top: 0.5rem;
+}
+
+/* ── Responsive ──────────────────────────── */
+@media (max-width: 768px) {
+    .section-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stalls-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── MOBILE OVERHAUL ─────────────────────────────── */
+
+/* Hamburger btn */
+.burger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+}
+
+.burger-btn span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+.mobile-nav {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 10, 0.97);
+    backdrop-filter: blur(16px);
+    padding: 1.5rem 2rem 2rem;
+    gap: 1.25rem;
+    z-index: 999;
+    border-bottom: 1px solid #2d2d2d;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-nav.open {
+    display: flex;
+}
+
+.mobile-nav a {
+    font-size: 1.25rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: #f5f5f5;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobile-nav a.nav-reservar {
+    color: #ff9d00;
+    font-weight: 600;
+    border-bottom: none;
+    margin-top: 0.5rem;
+}
+
+/* ── TABLET ≤768px ── */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none !important;
+    }
+
+    .burger-btn {
+        display: flex !important;
+    }
+
+    #hero {
+        height: auto;
+        min-height: 100svh;
+        padding-top: 72px;
+        background-attachment: scroll;
+        align-items: flex-start;
+    }
+
+    .hero-content {
+        padding: 2.5rem 1.5rem;
+        text-align: left;
+    }
+
+    #hero h1 {
+        font-size: clamp(2.4rem, 10vw, 3.8rem);
+        margin-bottom: 1rem;
+    }
+
+    #hero p {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        text-align: left;
+    }
+
+    .hero-btns {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        text-align: center;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        width: fit-content !important;
+        min-width: 250px;
+        /* Ancho igualado para mobile-first */
+        margin: 0 auto;
+        display: inline-flex !important;
+        justify-content: center;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+    }
+
+    #historia,
+    #gastronomia,
+    #experiencia,
+    #resenas,
+    #info {
+        padding: 2.5rem 1.25rem;
+    }
+
+    .section-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .section-image {
+        height: 240px;
+    }
+
+    .stalls-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.85rem;
+        margin-top: 2rem;
+    }
+
+    .stall-card {
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        flex-direction: row;
+        gap: 1.25rem;
+        align-items: flex-start;
+    }
+
+    .stall-icon {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 0;
+        flex-shrink: 0;
+        border-radius: 50%;
+        overflow: hidden;
+        border-width: 2px;
+    }
+
+    .stall-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .stall-card p {
+        font-size: 0.87rem;
+        line-height: 1.55;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .review-card {
+        padding: 1.25rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .full-width-accent {
+        background-attachment: scroll;
+        padding: 3rem 1.5rem;
+    }
+
+    footer {
+        padding: 2rem 1.5rem;
+    }
+}
+
+/* ── MOBILE ≤480px ── */
+@media (max-width: 480px) {
+    #main-nav {
+        padding: 1rem 1.25rem;
+    }
+
+    #hero h1 {
+        font-size: clamp(2rem, 12vw, 3rem);
+    }
+
+    .hero-content {
+        padding: 1.75rem 1.25rem;
+    }
+
+    .section-title {
+        font-size: 1.9rem;
+    }
+
+    #historia,
+    #gastronomia,
+    #experiencia,
+    #resenas,
+    #info {
+        padding: 2.75rem 1.15rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stall-card {
+        padding: 1.1rem 1.25rem;
+    }
+
+    .review-text {
+        font-size: 0.87rem;
+    }
+
+    /* Chat fullscreen */
+    #chat-panel {
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        bottom: auto !important;
+        right: auto !important;
+    }
+
+    #chat-btn {
+        bottom: 1.25rem;
+        right: 1.25rem;
+    }
+}
+
+/* ── NAV & FOOTER LOGO IMAGES ─────────── */
+.nav-logo-img {
+    height: 52px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(1.05) contrast(1.05);
+}
+
+#main-nav.scrolled .nav-logo-img {
+    filter: brightness(1.1);
+}
+
+.footer-logo-img {
+    height: 68px;
+    width: auto;
+    max-width: 300px;
+    object-fit: contain;
+    display: block;
+    opacity: 0.9;
+    margin: 0 auto 0.5rem;
+}
+
+@media (max-width: 480px) {
+    .nav-logo-img {
+        height: 52px;
+        max-width: 200px;
+    }
+
+    .footer-logo-img {
+        height: 52px;
+    }
+}
+
+/* ── INFO SECTION PREMIUM REDESIGN ───────────────── */
+#info {
+    padding: 5rem 5%;
+    background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+    position: relative;
+}
+
+#info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: var(--accent-amber);
+    opacity: 0.5;
+}
+
+.info-section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    padding: 0 5%;
+}
+
+.info-section-header .section-title {
+    margin-top: 0.5rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 157, 0, 0.12);
+    border-radius: 12px;
+    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-amber), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 157, 0, 0.35);
+    box-shadow: 0 12px 40px rgba(255, 157, 0, 0.08);
+}
+
+.info-card:hover::after {
+    opacity: 1;
+}
+
+.info-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 157, 0, 0.1);
+    border: 1px solid rgba(255, 157, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.4rem;
+    flex-shrink: 0;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.info-card:hover .info-icon-wrap {
+    background: rgba(255, 157, 0, 0.18);
+    box-shadow: 0 0 20px rgba(255, 157, 0, 0.2);
+}
+
+.info-icon-wrap svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--accent-amber);
+}
+
+.info-card-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.01em;
+}
+
+.info-card-body p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+}
+
+.info-card-body p strong {
+    color: var(--accent-amber);
+}
+
+.info-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 157, 0, 0.12);
+    border: 1px solid rgba(255, 157, 0, 0.25);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: var(--accent-amber);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 0.25rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    #info {
+        padding: 3rem 1.25rem;
+    }
+
+    .info-section-header {
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .info-card {
+        padding: 1.5rem 1.25rem;
+    }
+}
+
+/* ── INFO CARD ALIGNMENT FIX ─── */
+/* Push amber links to bottom of every card */
+.info-card {
+    flex-direction: column;
+}
+
+.info-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.info-card-body .info-link,
+.info-card-body .info-note {
+    margin-top: auto;
+}
+
+/* Subtle note style - no badge/button look */
+.info-note {
+    font-size: 0.78rem;
+    color: var(--accent-amber);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding-top: 0.25rem;
+}
+
+/* ── REVIEWS SECTION PREMIUM HEADER ──────── */
+#resenas {
+    padding: 5rem 0 4rem;
+    background: #0a0a0a;
+    position: relative;
+}
+
+#resenas::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: var(--accent-amber);
+    opacity: 0.4;
+}
+
+.resenas-header {
+    text-align: center;
+    padding: 0 5% 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.resenas-header .section-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    margin: 0.5rem 0 1.75rem;
+    line-height: 1.15;
+}
+
+.ta-badge-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 157, 0, 0.2);
+    border-radius: 50px;
+    padding: 0.55rem 1.4rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.ta-stars {
+    color: var(--accent-amber);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+}
+
+.ta-text {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.03em;
+}
+
+.ta-text strong {
+    color: var(--text-primary);
+}
+
+.ta-link {
+    font-size: 0.78rem;
+    color: var(--accent-amber);
+    font-weight: 600;
+    padding-left: 0.5rem;
+    border-left: 1px solid rgba(255, 157, 0, 0.25);
+    white-space: nowrap;
+    transition: opacity 0.2s;
+}
+
+.ta-link:hover {
+    opacity: 0.7;
+}
+
+/* Reviews grid — 3 cols on desktop, horizontal-ish feel */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding: 0 5%;
+}
+
+.review-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.review-card:hover {
+    border-color: rgba(255, 157, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+.review-stars {
+    color: var(--accent-amber);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.review-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-style: italic;
+    flex: 1;
+}
+
+.review-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.review-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 157, 0, 0.15);
+    border: 1px solid rgba(255, 157, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-amber);
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.review-author strong {
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    display: block;
+}
+
+.review-author span {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+    .reviews-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ta-badge-wrap {
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* ── HISTORY SECTION (MURAL TEXT) ──────── */
+.history-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+#historia .section-text p {
+    margin-bottom: 1.15rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.history-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent-amber);
+    margin: 2rem 0 0 0;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--accent-amber);
+    line-height: 1.3;
+}
+
+.image-accent-amber {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 100px;
+    height: 100px;
+    background: var(--accent-amber);
+    z-index: 0;
+}
+
+.mural-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    filter: brightness(0.9);
+}
+
+.mural-container {
+    position: relative;
+    height: 100%;
+    min-height: 400px;
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .mural-container {
+        min-height: 280px;
+    }
+}
+
+/* ── GASTRONOMIA SECTION PREMIUM HEADER ──────── */
+.gastronomia-header {
+    text-align: center;
+    padding: 2rem 5% 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gastronomia-header .section-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    margin: 0.5rem 0 1rem;
+    line-height: 1.15;
+}
+
+.gastronomia-header .info-badge {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 560px) {
+    .gastronomia-header {
+        text-align: center;
+        padding: 2rem 5% 3.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ── GALERIA DEL MERCADO (MASONRY GRID) ── */
+#galeria {
+    padding: 5rem 0;
+    background: #0a0a0a;
+}
+
+.galeria-header {
+    text-align: center;
+    padding: 0 5% 3rem;
+}
+
+.galeria-header .section-title {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    margin: 0.5rem 0 1rem;
+    line-height: 1.15;
+}
+
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+    padding: 0 5%;
+}
+
+.galeria-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 4/3;
+}
+
+.galeria-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: brightness(0.85) grayscale(10%);
+}
+
+.galeria-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1) grayscale(0);
+}
+
+
+@media (max-width: 768px) {
+    .galeria-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+        padding: 0 5%;
+    }
+
+    .galeria-item.large,
+    .galeria-item.wide {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 480px) {
+    .galeria-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 15px;
+        padding: 0 5%;
+    }
+
+    .galeria-item.large,
+    .galeria-item.wide,
+    .galeria-item.tall {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+}
+
+/* ── EVENTOS & CULTURA SECTION ─────── */
+#eventos {
+    padding: 5rem 0;
+    position: relative;
+    background: #111;
+}
+
+.eventos-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.eventos-header .section-eyebrow {
+    display: inline-block;
+    color: var(--accent-amber);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.eventos-header .section-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 1rem auto 0;
+}
+
+.eventos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.evento-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.evento-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 157, 0, 0.3);
+}
+
+.evento-img {
+    width: 100%;
+    height: 200px;
+}
+
+.evento-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-bottom: 2px solid var(--accent-amber);
+}
+
+.evento-content {
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.evento-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.evento-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.evento-timing {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background: rgba(255, 157, 0, 0.15);
+    color: var(--accent-amber);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: auto;
+}
+
+@media (max-width: 900px) {
+    .eventos-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+/* ── BODEGA ESTRELLA GALICIA ─────── */
+#bodega {
+    background: #0f0f0f;
+    position: relative;
+    overflow: hidden;
+}
+
+.bodega-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.bodega-content {
+    flex: 1 1 50%;
+    padding: 6rem 8% 6rem 5%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bodega-content .section-eyebrow {
+    display: inline-block;
+    color: var(--accent-amber);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.bodega-content p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.bodega-badge {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 157, 0, 0.1);
+    border: 1px solid rgba(255, 157, 0, 0.3);
+    color: var(--accent-amber);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    align-self: flex-start;
+}
+
+.bodega-image {
+    flex: 1 1 50%;
+    min-height: 500px;
+    position: relative;
+}
+
+.bodega-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 992px) {
+
+    .bodega-content,
+    .bodega-image {
+        flex: 1 1 100%;
+    }
+
+    .bodega-content {
+        padding: 4rem 5%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .bodega-image {
+        min-height: 400px;
+        position: relative;
+    }
+}
+
+/* ── Jumping Robot Animation ──────────────── */
+/* ── EVENTOS & CULTURA SECTION ─────── */
+#eventos {
+    padding: 5rem 0;
+    position: relative;
+    background: #111;
+}
+
+.eventos-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.eventos-header .section-eyebrow {
+    display: inline-block;
+    color: var(--accent-amber);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.eventos-header .section-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 1rem auto 0;
+}
+
+.eventos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.evento-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.evento-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 157, 0, 0.3);
+}
+
+.evento-img {
+    width: 100%;
+    height: 200px;
+}
+
+.evento-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-bottom: 2px solid var(--accent-amber);
+}
+
+.evento-content {
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+.evento-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.evento-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.evento-timing {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background: rgba(255, 157, 0, 0.15);
+    color: var(--accent-amber);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: auto;
+}
+
+@media (max-width: 900px) {
+    .eventos-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+/* ── BODEGA ESTRELLA GALICIA ─────── */
+#bodega {
+    background: #0f0f0f;
+    position: relative;
+    overflow: hidden;
+}
+
+.bodega-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.bodega-content {
+    flex: 1 1 50%;
+    padding: 6rem 8% 6rem 5%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bodega-content .section-eyebrow {
+    display: inline-block;
+    color: var(--accent-amber);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.bodega-content p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.bodega-badge {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 157, 0, 0.1);
+    border: 1px solid rgba(255, 157, 0, 0.3);
+    color: var(--accent-amber);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    align-self: flex-start;
+}
+
+.bodega-image {
+    flex: 1 1 50%;
+    min-height: 500px;
+    position: relative;
+}
+
+.bodega-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 992px) {
+
+    .bodega-content,
+    .bodega-image {
+        flex: 1 1 100%;
+    }
+
+    .bodega-content {
+        padding: 4rem 5%;
+        text-align: center;
+        align-items: center;
+    }
+
+    .bodega-image {
+        min-height: 400px;
+        position: relative;
+    }
+}
+
+/* ── Jumping Robot Animation ──────────────── */
+.btn-robot {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    /* Espacio entre texto y robot */
+    width: fit-content;
+    vertical-align: middle;
+}
+
+.robot-jump {
+    position: relative;
+    top: -2px;
+    /* Ajuste fino para alineación visual con el texto */
+    font-size: 1.4rem;
+    pointer-events: none;
+    animation: robot-bounce 1.5s infinite ease-in-out;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    display: inline-block;
+}
+
+@keyframes robot-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+/* Ajuste para que el botón no corte el robot */
+.btn-secondary.btn-robot,
+.info-link.btn-robot {
+    overflow: visible !important;
+}
+
+/* -- Mobile Overrides for Robot ---------------- */
+@media (max-width: 768px) {
+    .btn-robot {
+        gap: 6px;
+    }
+
+    .robot-jump {
+        font-size: 1.1rem;
+        top: -1px;
+        /* Ajuste móvil */
+    }
+}

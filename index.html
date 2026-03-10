@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Galiciana | Mercado Gastronómico Santiago de Compostela</title>
+    <meta name="description"
+        content="Descubre La Galiciana, el primer mercado gastronómico de Santiago. Un espacio industrial único con 16 locales, pulpo a feira, sushi, y el mejor ambiente de la ciudad.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/chat.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav id="main-nav">
+        <div class="container nav-content">
+            <div class="logo">
+                <img src="assets/img/logo-galiciana.png" alt="La Galiciana – Mercado Gastrogalaico"
+                    class="nav-logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#historia">Nuestra Historia</a></li>
+                <li><a href="#gastronomia">Gastronomía</a></li>
+                <li><a href="#resenas">Opiniones</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <button class="burger-btn" id="burger-btn" onclick="toggleMobileMenu()" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="#historia" onclick="toggleMobileMenu()">Nuestra Historia</a>
+        <a href="#gastronomia" onclick="toggleMobileMenu()">Gastronomía</a>
+        <a href="#resenas" onclick="toggleMobileMenu()">Opiniones</a>
+        <a href="#contacto" onclick="toggleMobileMenu()">Contacto</a>
+        <a href="#" onclick="toggleMobileMenu(); toggleChat(); return false;" class="nav-reservar btn-robot">
+            Reservar Mesa
+            <span class="robot-jump">🤖</span>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <header id="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="reveal" style="text-align: center; margin-bottom: 2rem;">
+                <img src="assets/img/logo-galiciana.png" alt="Mercado Gastrogalaico La Galiciana"
+                    style="max-width: 90%; width: 500px; height: auto; filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); display: inline-block;">
+                <h1 style="display: none;">Mercado Gastrogalaico La Galiciana</h1>
+            </div>
+            <p class="reveal">Un viaje culinario de Cuba a Santiago. <br>Corazón industrial, alma gallega.</p>
+            <div class="hero-btns reveal">
+                <a href="#galeria" class="btn-primary">Ver el Mercado</a>
+                <a href="#" onclick="toggleChat(); return false;" class="btn-secondary btn-robot">
+                    Reservar Mesa
+                    <span class="robot-jump">🤖</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Historia Section -->
+    <section id="historia" class="container reveal">
+        <div class="section-grid">
+            <div class="section-text">
+                <h2 class="section-title">El origen del <span class="text-accent">nombre</span></h2>
+                <h3 class="history-subtitle">La reconstrucción de la identidad gallega en Cuba: procesiones, festivales
+                    y romerías regionales en La Habana (1804-1920)</h3>
+                <p>A partir de 1908 el colectivo gallego de Cuba comenzará a organizar romerías populares de su país de
+                    origen. La iniciativa no partió de las grandes sociedades regionales, sino de pequeñas sociedades de
+                    adscripción local.</p>
+                <p>Desde entonces todos los domingos se celebraron romerías galaicas en los jardines de las grandes
+                    cervecerías habaneras, donde se consumían con melancólica complacencia, empanadas y vino del
+                    Ribeiro, bajo el nostálgico quejido de las gaitas y los aires festivos de las muiñeiras.</p>
+                <p>En este comensalismo festivo se fueron revitalizando, e incluso inventando las señas de identidad de
+                    los gallegos en el exilio caribeño.</p>
+                <blockquote class="history-quote">Nacerían así las denominadas comidas "Galicianas"</blockquote>
+            </div>
+            <div class="section-image mural-container">
+                <div class="image-accent-amber"></div>
+                <img src="assets/img/historia-mural.jpg" alt="Mural nave Villaverde" class="mural-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- Arquitectura Section -->
+    <section id="arquitectura" class="reveal" style="background: rgba(255,157,0,0.02); padding: 5rem 0;">
+        <div class="container section-grid" style="align-items: center; padding: 2rem 5%;">
+            <div class="section-image"
+                style="max-width: 90%; margin: 0 auto; box-shadow: 0 10px 40px rgba(255,157,0,0.15); border-radius: 0;">
+                <img src="assets/img/tractor.jpg" alt="Nuestro emblemático tractor rojo en el corazón de La Galiciana"
+                    style="border-radius: 0; width: 100%; height: auto; display: block; object-fit: cover; border: none;">
+            </div>
+            <div class="section-text">
+                <span class="section-eyebrow">Nave Industrial Villaverde</span>
+                <h2 class="section-title">Diseño e <span class="text-accent">Interiorismo</span></h2>
+                <p>Ubicados en un histórico almacén de 1.200m², el estudio <strong>Espacio Invisible</strong> ha
+                    transformado el local en un referente del diseño "industrial chic".</p>
+                <p>Bajo las imponentes cerchas metálicas originales, el espacio respira cultura atlántica: paredes
+                    revestidas de corcho natural que simulan los minifundios gallegos, un espectacular mural homenaje a
+                    la cerámica de <strong>Sargadelos</strong>, y una planta alta que rinde tributo a nuestra histórica
+                    industria conservera.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria Section -->
+    <section id="galeria">
+        <div class="galeria-header reveal">
+            <span class="section-eyebrow">Descubre el espacio</span>
+            <h2 class="section-title">Nuestra <span class="text-accent">Esencia</span></h2>
+        </div>
+        <div class="galeria-grid">
+            <div class="galeria-item reveal"><img src="assets/img/tractor.jpg" alt="Tractor frontal La Galiciana"></div>
+            <div class="galeria-item reveal"><img src="assets/img/eilg-16-web.jpg" alt="Interior La Galiciana"></div>
+            <div class="galeria-item reveal"><img src="assets/img/1000007156 (1).jpg" alt="Ambiente y mesas"></div>
+            <div class="galeria-item reveal"><img src="assets/img/eilg-11-web.jpg" alt="Balcones del mercado"></div>
+            <div class="galeria-item reveal"><img src="assets/img/lamparas-rosquillas.jpg" alt="Lámparas rosquilla">
+            </div>
+            <div class="galeria-item reveal"><img src="assets/img/1000007153 (1).jpg" alt="Mesas altas"></div>
+            <div class="galeria-item reveal"><img src="assets/img/horreos-web3.jpg" alt="Hórreos decorativos"></div>
+            <div class="galeria-item reveal"><img src="assets/img/tractor.jpg" alt="Nuestro icónico tractor rojo"></div>
+            <div class="galeria-item reveal"><img src="assets/img/cokteles.jpg" alt="Cócteles y aperitivos"></div>
+            <div class="galeria-item reveal"><img src="assets/img/eilg-4-web.jpg" alt="Pasillo central"></div>
+            <div class="galeria-item reveal"><img src="assets/img/bodega-temporada-1.jpg" alt="Bodega Estrella Galicia">
+            </div>
+            <div class="galeria-item reveal"><img src="assets/img/eilg-3-web.jpg" alt="Cocina"></div>
+            <div class="galeria-item reveal"><img src="assets/img/eilg-15-web.jpg" alt="Vista general del espacio">
+            </div>
+            <div class="galeria-item reveal"><img src="assets/img/0.jpg" alt="Gastronomía"></div>
+            <div class="galeria-item reveal"><img src="assets/img/detalle-rotulo-web.jpg"
+                    alt="Rótulo del mercado luminoso"></div>
+            <div class="galeria-item reveal"><img src="assets/img/eilg-9-web.jpg" alt="Detalle arquitectura"></div>
+            <div class="galeria-item reveal"><img src="assets/img/eilg-1-web.jpg" alt="Nave Industrial Villaverde">
+            </div>
+        </div>
+    </section>
+
+    <!-- Gastronomia Section -->
+    <section id="gastronomia">
+        <div class="gastronomia-header reveal">
+            <span class="section-eyebrow">Para todos los gustos</span>
+            <h2 class="section-title">Ocho cocinas bajo <br><span class="text-accent">el mismo techo</span></h2>
+            <div class="info-badge">1 Mercado &middot; 8 Experiencias</div>
+        </div>
+        <div class="container">
+            <div class="stalls-grid">
+
+                <div class="stall-card reveal">
+                    <div class="stall-icon">
+                        <img src="assets/img/casa-maria.png" alt="Casa María" class="stall-img">
+                    </div>
+                    <h3>Casa María</h3>
+                    <p>Cocina tradicional gallega en su estado más puro. Recetas de siempre, producto de proximidad y el
+                        amor de toda la vida en cada plato.</p>
+                </div>
+
+                <div class="stall-card reveal">
+                    <div class="stall-icon">
+                        <img src="assets/img/churras-churras.png" alt="Churras Churras" class="stall-img">
+                    </div>
+                    <h3>Churras Churras</h3>
+                    <p>Tortillería artesanal y pollo de la mejor calidad. El crujiente perfecto en cada bocado, con
+                        huevo campero gallego.</p>
+                </div>
+
+                <div class="stall-card reveal">
+                    <div class="stall-icon">
+                        <img src="assets/img/veggie-carmen.png" alt="Veggie Carmen" class="stall-img">
+                    </div>
+                    <h3>Veggie Carmen</h3>
+                    <p>Cocina vegetariana y vegana con ingredientes gallegos, ecológicos y de temporada. Sabor y
+                        conciencia en el mismo plato.</p>
+                </div>
+
+                <div class="stall-card reveal">
+                    <div class="stall-icon">
+                        <img src="assets/img/petit-tamboril.png" alt="Le Petit Tamboril" class="stall-img">
+                    </div>
+                    <h3>Le Petit Tamboril</h3>
+                    <p>Arrocéra de autor especializada en marisco y pescado gallego. Del arroz caldoso al meloso,
+                        siempre con el mejor producto del mar.</p>
+                </div>
+
+                <div class="stall-card reveal">
+                    <div class="stall-icon">
+                        <img src="assets/img/lacon-street.png" alt="Lacón Street" class="stall-img">
+                    </div>
+                    <h3>Lacón Street</h3>
+                    <p>Parrilladas, carnes a la brasa y hamburguesas de primera calidad. El fuego y el producto gallego
+                        en su máxima expresión.</p>
+                </div>
+
+                <div class="stall-card reveal">
+                    <div class="stall-icon">
+                        <img src="assets/img/ollo-pataca.png" alt="Ollo Pataca" class="stall-img">
+                    </div>
+                    <h3>Ollo Pataca</h3>
+                    <p>Patatas gallegas elaboradas con mimo y tradición. Variedades artésanas con salsas caseras que
+                        convierten lo sencillo en algo especial.</p>
+                </div>
+
+                <div class="stall-card reveal">
+                    <div class="stall-icon">
+                        <img src="assets/img/tototrufa.png" alt="TotoTrufa'62" class="stall-img">
+                    </div>
+                    <h3>TotoTrufa'62</h3>
+                    <p>Cocina italiana auténtica con la trufa como protagonista. Pastas, risottos y recetas clásicas de
+                        la península con materia prima excepcional.</p>
+                </div>
+
+                <div class="stall-card reveal">
+                    <div class="stall-icon">
+                        <img src="assets/img/iraxai.png" alt="Iraxai" class="stall-img">
+                    </div>
+                    <h3>Iraxai</h3>
+                    <p>Cocina japo-gallega única en Santiago. La precisión japonesa encuentra el producto gallego para
+                        crear bocados imposibles de olvidar.</p>
+                </div>
+
+            </div>
+
+        </div>
+        </div>
+    </section>
+
+    <!-- Platos Estrella Section -->
+    <section id="platos-estrella" class="reveal"
+        style="padding: 5rem 0; background: url('assets/img/hero-bg.jpg') center/cover fixed; position: relative;">
+        <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,10,0.92); z-index: 1;">
+        </div>
+        <div class="container text-center" style="position: relative; z-index: 2; margin-bottom: 3rem;">
+            <span class="section-eyebrow">Recomendaciones</span>
+            <h2 class="section-title">Nuestros <span class="text-accent">Platos Estrella</span></h2>
+            <p class="section-subtitle">Las creaciones más aclamadas de nuestras cocinas, directamente a tu mesa.</p>
+        </div>
+
+        <div class="platos-slider-container"
+            style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; overflow: hidden; padding: 0 5%;">
+            <div class="platos-slider"
+                style="display: flex; gap: 2rem; overflow-x: auto; padding-bottom: 2rem; scroll-snap-type: x mandatory; -ms-overflow-style: none; scrollbar-width: none;">
+
+                <div class="plato-card"
+                    style="min-width: 320px; background: #151515; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); scroll-snap-align: start;">
+                    <div style="height: 220px; overflow: hidden; position: relative;">
+                        <img src="assets/img/tosta-pulpo_3.jpg" alt="Tosta de Pulpo"
+                            style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);">
+                        <div
+                            style="position: absolute; top: 1rem; right: 1rem; background: var(--accent-amber); color: #000; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">
+                            Lo más pedido</div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3
+                            style="color: var(--text-primary); margin-bottom: 0.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;">
+                            Tosta de Pulpo</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">Nuestra famosa
+                            tosta artesanal con finas láminas de pulpo, queso Arzúa Ulloa fundido, pimentón de la Vera y
+                            un toque de sal en escamas.</p>
+                    </div>
+                </div>
+
+                <div class="plato-card"
+                    style="min-width: 320px; background: #151515; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); scroll-snap-align: start;">
+                    <div style="height: 220px; overflow: hidden;">
+                        <img src="assets/img/kachopo.jpg" alt="Kachopo"
+                            style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);">
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3
+                            style="color: var(--text-primary); margin-bottom: 0.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;">
+                            Kachopos 'Made in Spain'</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">En exclusiva: 450
+                            gramos de auténtico cachopo asturiano crujiente por fuera y fundente por dentro, relleno
+                            premium de cecina y cabra, con patatas.</p>
+                    </div>
+                </div>
+
+                <div class="plato-card"
+                    style="min-width: 320px; background: #151515; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); scroll-snap-align: start;">
+                    <div style="height: 220px; overflow: hidden;">
+                        <img src="assets/img/pulpo-feira_clean.jpg" alt="Pulpo á Feira"
+                            style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);">
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3
+                            style="color: var(--text-primary); margin-bottom: 0.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;">
+                            Pulpo á Feira</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">El gran clásico
+                            rey de la gastronomía gallega. Cocido tradicionalmente y servido en tabla de madera con
+                            aceite de oliva virgen extra.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <style>
+            .platos-slider::-webkit-scrollbar {
+                display: none;
+            }
+
+            .plato-card {
+                transition: transform 0.3s ease, border-color 0.3s ease;
+            }
+
+            .plato-card:hover {
+                transform: translateY(-5px);
+                border-color: rgba(255, 157, 0, 0.4) !important;
+            }
+
+            .plato-card img {
+                transition: transform 0.5s ease;
+            }
+
+            .plato-card:hover img {
+                transform: scale(1.05);
+            }
+        </style>
+    </section>
+    <section id="eventos" class="reveal">
+        <div class="eventos-header">
+            <span class="section-eyebrow">Agenda y Cultura</span>
+            <h2 class="section-title">Vive el <span class="text-accent">Mercado</span></h2>
+            <p class="section-subtitle">Mucho más que gastronomía. Música, catas y experiencias cada semana.</p>
+        </div>
+        <div class="container">
+            <div class="eventos-grid">
+                <div class="evento-card reveal">
+                    <div class="evento-img">
+                        <img src="assets/img/1000007370 (1).jpg" alt="Actuaciones en directo en La Galiciana">
+                    </div>
+                    <div class="evento-content">
+                        <h3>Música en Directo</h3>
+                        <p>Las noches del fin de semana el mercado cobra vida con actuaciones en vivo. Pop, indie, jazz
+                            y lo mejor del panorama local gallego.</p>
+                        <span class="evento-timing">Jueves a Sábados</span>
+                    </div>
+                </div>
+
+                <div class="evento-card reveal">
+                    <div class="evento-img">
+                        <img src="assets/img/bodega-temporada.jpg" alt="Bodega de temporada Estrella Galicia">
+                    </div>
+                    <div class="evento-content">
+                        <h3>Cultura de Cerveza</h3>
+                        <p>Catas maridadas, talleres de tiraje y la mejor cerveza de bodega. El templo para los amantes
+                            del buen lúpulo y las ediciones especiales Estrella Galicia.</p>
+                        <span class="evento-timing">Consultar agenda</span>
+                    </div>
+                </div>
+
+                <div class="evento-card reveal">
+                    <div class="evento-img">
+                        <img src="assets/img/san-valentin.png" alt="Showcookings y eventos especiales">
+                    </div>
+                    <div class="evento-content">
+                        <h3>Showcookings</h3>
+                        <p>Nuestros chefs salen a la plaza para mostrar sus secretos. Aprende técnicas culinarias,
+                            descubre nuevos productos locales y degusta creaciones en directo.</p>
+                        <span class="evento-timing">Mensual</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bodega Estrella Galicia Section -->
+    <section id="bodega" class="reveal">
+        <div class="bodega-container">
+            <div class="bodega-content">
+                <span class="section-eyebrow">Cerveza de Bodega</span>
+                <h2 class="section-title">Nuestra Bodega <br><span class="text-accent">Estrella Galicia</span></h2>
+                <p>El corazón líquido de La Galiciana. Disfruta de nuestra <strong>cerveza de bodega</strong>, que llega
+                    directamente de la fábrica a tu copa en frío y sin pasteurizar, manteniendo intactos todos sus
+                    matices, aromas y frescura original.</p>
+                <p>Nuestros seis imponentes tanques verticales, diseñados a medida para integrarse en nuestra estética
+                    industrial, presiden el mercado para garantizar la experiencia cervecera más auténtica.</p>
+                <div class="bodega-badge">Sede oficial del proyecto <strong>Fugaces</strong> (ediciones limitadas)</div>
+            </div>
+            <div class="bodega-image">
+                <img src="assets/img/eilg-20-web.jpg" alt="Tanques de Estrella Galicia en La Galiciana">
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Feature: The Tractor -->
+    <section id="experiencia" class="full-width-accent">
+        <div class="container text-center reveal">
+            <h2>Mucho más que <span class="text-accent">Comer</span></h2>
+            <p>Desde nuestro icónico tractor rojo hasta las largas mesas comunales, en La Galiciana cada rincón cuenta
+                una historia. Somos el punto de encuentro donde fluye la Estrella Galicia y nacen las mejores anécdotas.
+            </p>
+            <div class="tractor-badge">El Alma del Mercado · Rúa de Gómez Ulla, 1</div>
+        </div>
+    </section>
+
+    <!-- Reseñas TripAdvisor -->
+    <section id="resenas">
+        <div class="resenas-header reveal">
+            <h2 class="section-title">Lo que dicen <span class="text-accent">nuestros clientes</span></h2>
+            <div class="ta-badge-wrap">
+                <svg class="ta-logo" viewBox="0 0 24 24" width="24" height="24" fill="var(--accent-amber)">
+                    <path
+                        d="M22 10.934c-.815 0-1.536.467-1.854 1.144-.047-.534-.23-1.034-.51-1.468C18.15 8.165 15.358 6.5 12 6.5S5.85 8.165 4.364 10.61c-.28.434-.463.934-.51 1.468-.318-.677-1.039-1.144-1.854-1.144-1.103 0-2 .897-2 2 0 1.08.857 1.96 1.927 1.996.166 1.433.844 2.748 1.884 3.738C5.54 20.323 8.528 21.36 12 21.36s6.46-1.037 8.189-2.692c1.04-.99 1.718-2.305 1.884-3.738 1.07-.036 1.927-.917 1.927-1.996 0-1.103-.897-2-2-2zM6.9 14.82c-1.353 0-2.45-1.097-2.45-2.45s1.097-2.45 2.45-2.45 2.45 1.097 2.45 2.45-1.097 2.45-2.45 2.45zm5.1 2.37c-.8 0-1.45-.65-1.45-1.45s.65-1.45 1.45-1.45 1.45.65 1.45 1.45-.65 1.45-1.45 1.45zm5.1-2.37c-1.353 0-2.45-1.097-2.45-2.45s1.097-2.45 2.45-2.45 2.45 1.097 2.45 2.45-1.097 2.45-2.45 2.45zM12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18.5c-4.687 0-8.5-3.813-8.5-8.5S7.313 3.5 12 3.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z" />
+                </svg>
+                <span class="ta-stars">★★★★★</span>
+                <span class="ta-text">4.5 sobre 5 &middot; <strong>492 opiniones</strong> en TripAdvisor</span>
+                <a href="https://www.tripadvisor.es/Restaurant_Review-g187508-d14918812-Reviews-Mercado_La_Galiciana"
+                    target="_blank" class="ta-link">Ver todas &rarr;</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="reviews-grid">
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Me encantó. Pedimos arroz de carrilleras y una tosta de pulpo, muy bueno. El
+                        servicio genial también."</p>
+                    <div class="review-author">
+                        <div class="review-avatar">N</div>
+                        <div><strong>Necr</strong><span>Diciembre 2025</span></div>
+                    </div>
+                </div>
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"La idea de poder recibir distintos tipos de comida en la mesa fue
+                        fantástica. El propietario, una gran persona."</p>
+                    <div class="review-author">
+                        <div class="review-avatar">B</div>
+                        <div><strong>Brendan</strong><span>Junio 2025</span></div>
+                    </div>
+                </div>
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Excelente servicio y comida muy buena. Precios accesibles. ¡Fuimos dos días
+                        seguidos porque nos encantó!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">S</div>
+                        <div><strong>Skarlette</strong><span>Junio 2025</span></div>
+                    </div>
+                </div>
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★☆</div>
+                    <p class="review-text">"Sitio llamativo y bien planteado: variedad de puestos, buen trato de los
+                        camareros. Bien el servicio, bien la comida."</p>
+                    <div class="review-author">
+                        <div class="review-avatar">V</div>
+                        <div><strong>Viajoporqueexisto</strong><span>Febrero 2025</span></div>
+                    </div>
+                </div>
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★☆</div>
+                    <p class="review-text">"El sitio está muy bien decorado, con diferentes espacios según lo que te
+                        apetezca. Las mesas comunales invitan a compartir. Una experiencia diferente en Santiago."</p>
+                    <div class="review-author">
+                        <div class="review-avatar">E</div>
+                        <div><strong>Experience</strong><span>Febrero 2025</span></div>
+                    </div>
+                </div>
+                <div class="review-card reveal">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Qué sitio tan chulo. Fui entre semana al mediodía y aunque estaba bastante
+                        lleno, el ambiente era genial. La variedad de opciones es única. ¡Repetiremos seguro!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">M</div>
+                        <div><strong>María P.</strong><span>Enero 2025</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="info">
+        <div class="info-section-header reveal">
+            <span class="section-eyebrow">Visítanos</span>
+            <h2 class="section-title">Todo lo que <span class="text-accent">necesitas saber</span></h2>
+        </div>
+        <div class="container">
+            <div class="info-grid">
+
+                <div class="info-card reveal">
+                    <div class="info-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                    </div>
+                    <div class="info-card-body">
+                        <h3>Dónde estamos</h3>
+                        <p>Rúa de Gómez Ulla, 1<br>15705 Santiago de Compostela</p>
+                        <a href="https://maps.google.com/?q=La+Galiciana+Santiago+de+Compostela" target="_blank"
+                            class="info-link">Ver en Google Maps →</a>
+                    </div>
+                </div>
+
+                <div class="info-card reveal">
+                    <div class="info-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                    </div>
+                    <div class="info-card-body">
+                        <h3>Horario</h3>
+                        <p>Lun – Mié y Dom: 12:00 – 00:00<br>Jue, Vie, Sáb: 12:00 – <strong>01:00</strong></p>
+                        <span class="info-note">Abierto todos los días</span>
+                    </div>
+                </div>
+
+                <div class="info-card reveal">
+                    <div class="info-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                        </svg>
+                    </div>
+                    <div class="info-card-body">
+                        <h3>Reservas</h3>
+                        <p>Grupos menores de 6 personas no necesitan reserva previa. Se atiende por orden de llegada.
+                        </p>
+                        <a href="#" onclick="toggleChat(); return false;" class="info-link btn-robot">
+                            Reservar por chat →
+                            <span class="robot-jump">🤖</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="info-card reveal">
+                    <div class="info-icon-wrap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                    </div>
+                    <div class="info-card-body">
+                        <h3>Síguenos</h3>
+                        <p>Toda la actualidad del mercado, eventos y novedades gastronómicas.</p>
+                        <a href="https://www.instagram.com/mercadolagaliciana/" target="_blank"
+                            class="info-link">@mercadolagaliciana →</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+
+    <footer id="contacto">
+        <div class="container footer-inner">
+            <div class="footer-logo">
+                <img src="assets/img/logo-galiciana.png" alt="La Galiciana" class="footer-logo-img">
+                <span class="footer-tagline">Mercado Gastrogaláico · Santiago de Compostela</span>
+            </div>
+            <p class="footer-copy">&copy; 2026 La Galiciana. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div id="chat-btn" onclick="toggleChat()" title="Reservar mesa">
+        <span id="chat-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+        </span>
+        <span id="chat-label">Reservar</span>
+        <span id="chat-unread" class="chat-badge" style="display:none">1</span>
+    </div>
+
+    <div id="chat-panel">
+        <div id="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                    <img src="assets/img/tractor-icon.png" alt="Tractor"
+                        style="width: 80%; height: 80%; object-fit: contain;">
+                </div>
+                <div>
+                    <strong>Galiciana IA</strong>
+                    <span class="chat-status">● En línea</span>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button id="chat-minimize" onclick="toggleChat()" aria-label="Minimizar chat">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="13 17 18 12 13 7"></polyline>
+                        <polyline points="6 17 11 12 6 7"></polyline>
+                    </svg>
+                </button>
+                <button id="chat-close" onclick="closeChat()" aria-label="Cerrar chat">✕</button>
+            </div>
+        </div>
+
+        <div id="chat-messages">
+            <div class="chat-msg bot">
+                <div class="msg-bubble">
+                    ¡Hola! Soy la asistente virtual de <strong>La Galiciana</strong> <img
+                        src="assets/img/tractor-icon.png" alt="Tractor"
+                        style="width: 24px; vertical-align: middle; margin-left: 4px;"><br><br>
+                    Puedo ayudarte a <strong>reservar una mesa</strong>, o resolverte cualquier duda sobre el mercado.
+                    ¿Por dónde empezamos?
+                </div>
+                <span class="msg-time">ahora</span>
+            </div>
+        </div>
+
+        <div id="chat-typing" class="typing-indicator" style="display:none">
+            <span></span><span></span><span></span>
+        </div>
+
+        <div id="chat-input-row">
+            <input type="text" id="chat-input" placeholder="Escribe tu mensaje..."
+                onkeydown="if(event.key==='Enter') sendMessage()" autocomplete="off" />
+            <button id="chat-send" onclick="sendMessage()" aria-label="Enviar">➤</button>
+        </div>
+    </div>
+
+    <script src="assets/js/chat.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+
+</html>
