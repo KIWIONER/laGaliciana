@@ -5,14 +5,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Scroll Reveal Animation
     const reveals = document.querySelectorAll('.reveal');
 
+    let isScrolling = false;
     const revealOnScroll = () => {
-        const triggerBottom = window.innerHeight * 0.85;
-        reveals.forEach(reveal => {
-            const revealTop = reveal.getBoundingClientRect().top;
-            if (revealTop < triggerBottom) reveal.classList.add('active');
+        if (isScrolling) return;
+        isScrolling = true;
+
+        window.requestAnimationFrame(() => {
+            const triggerBottom = window.innerHeight * 0.85;
+            reveals.forEach(reveal => {
+                const revealTop = reveal.getBoundingClientRect().top;
+                if (revealTop < triggerBottom) reveal.classList.add('active');
+            });
+            isScrolling = false;
         });
     };
-    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('scroll', revealOnScroll, { passive: true });
     revealOnScroll();
 
     // Smooth Scrolling
