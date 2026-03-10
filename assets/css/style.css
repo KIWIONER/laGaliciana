@@ -1635,6 +1635,68 @@ footer {
     }
 }
 
+/* ── SUGERENCIAS SECTION ─────── */
+#sugerencias {
+    position: relative;
+    overflow: hidden;
+}
+
+.sugerencias-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.sugerencia-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.sugerencia-card:hover {
+    background: rgba(255, 157, 0, 0.05);
+    border-color: var(--accent-amber);
+    transform: translateY(-5px);
+}
+
+.sugerencia-card h3 {
+    color: var(--accent-amber);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.sugerencia-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .sugerencias-row {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 15px;
+        padding-bottom: 1rem;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .sugerencias-row::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sugerencia-card {
+        flex: 0 0 75vw;
+        scroll-snap-align: start;
+        padding: 1.5rem;
+    }
+}
+
 /* ── Jumping Robot Animation ──────────────── */
 /* ── EVENTOS & CULTURA SECTION ─────── */
 #eventos {
