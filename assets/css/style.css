@@ -1390,31 +1390,52 @@ footer {
 
 @media (max-width: 768px) {
     .galeria-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        display: flex;
+        /* Cambiado de grid a flex para carrusel horizontal */
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
         gap: 15px;
-        padding: 0 5%;
+        padding: 0 5% 1.5rem;
+        -ms-overflow-style: none;
+        /* Ocultar scrollbar IE/Edge */
+        scrollbar-width: none;
+        /* Ocultar scrollbar Firefox */
+    }
+
+    .galeria-grid::-webkit-scrollbar {
+        display: none;
+        /* Ocultar scrollbar Chrome/Safari */
+    }
+
+    .galeria-item {
+        flex: 0 0 85vw;
+        /* Ancho fijo para que se vea el inicio de la siguiente */
+        scroll-snap-align: start;
+        border-radius: 12px;
     }
 
     .galeria-item.large,
     .galeria-item.wide {
-        grid-column: span 2;
+        grid-column: auto;
+        /* Desactivar spans de grid */
+        flex: 0 0 85vw;
     }
 }
 
 @media (max-width: 480px) {
-    .galeria-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 15px;
-        padding: 0 5%;
+
+    /* Mantenemos el comportamiento de carrusel flex heredado de 768px */
+    .galeria-item {
+        flex: 0 0 80vw;
+        /* Un poco más pequeño en móviles muy estrechos */
     }
 
     .galeria-item.large,
     .galeria-item.wide,
     .galeria-item.tall {
-        grid-column: span 1;
-        grid-row: span 1;
+        grid-column: auto;
+        grid-row: auto;
+        flex: 0 0 80vw;
     }
 }
 
