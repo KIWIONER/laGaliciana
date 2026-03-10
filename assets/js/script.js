@@ -43,6 +43,23 @@ document.addEventListener('DOMContentLoaded', () => {
             mobileNav.classList.remove('open');
         }
     });
+    // Mobile Interaction for Stall Cards
+    const stallCards = document.querySelectorAll('.stall-card');
+    stallCards.forEach(card => {
+        card.addEventListener('click', () => {
+            // Only functional on mobile/tablets defined by CSS
+            if (window.innerWidth <= 768) {
+                const isActive = card.classList.contains('active');
+
+                // Optional: Close other cards
+                stallCards.forEach(c => c.classList.remove('active'));
+
+                if (!isActive) {
+                    card.classList.add('active');
+                }
+            }
+        });
+    });
 });
 
 // Mobile menu toggle
