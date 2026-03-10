@@ -49,13 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => {
             // Only functional on mobile/tablets defined by CSS
             if (window.innerWidth <= 768) {
-                const isActive = card.classList.contains('active');
+                const isExpanded = card.classList.contains('is-expanded');
 
-                // Optional: Close other cards
-                stallCards.forEach(c => c.classList.remove('active'));
+                // Close other cards
+                stallCards.forEach(c => c.classList.remove('is-expanded'));
 
-                if (!isActive) {
-                    card.classList.add('active');
+                if (!isExpanded) {
+                    card.classList.add('is-expanded');
                 }
             }
         });
