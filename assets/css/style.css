@@ -319,9 +319,9 @@ a {
 }
 
 .stall-icon {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 2rem;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,7 +335,8 @@ a {
 .stall-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    padding: 15px;
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
